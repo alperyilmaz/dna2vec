@@ -16,16 +16,15 @@ from dna2vec.histogram import Histogram
 from dna2vec.generators import SeqGenerator, KmerSeqIterable, SeqMapper, SeqFragmenter
 from dna2vec.generators import DisjointKmerFragmenter, SlidingKmerFragmenter
 
-from gensim.models import word2vec
-
+from gensim.models import Word2Vec
 class InvalidArgException(Exception):
     pass
 
 class Learner:
     def __init__(self, out_fileroot, context_halfsize, gensim_iters, vec_dim):
         self.logger = logbook.Logger(self.__class__.__name__)
-        assert(word2vec.FAST_VERSION >= 0)
-        self.logger.info('word2vec.FAST_VERSION (should be >= 0): {}'.format(word2vec.FAST_VERSION))
+        # assert(Word2Vec.FAST_VERSION >= 0)
+        # self.logger.info('Word2Vec.FAST_VERSION (should be >= 0): {}'.format(Word2Vec.FAST_VERSION))
         self.model = None
         self.out_fileroot = out_fileroot
         self.context_halfsize = context_halfsize
@@ -39,7 +38,7 @@ class Learner:
         self.logger.info('vec_dim: {}'.format(self.vec_dim))
 
     def train(self, kmer_seq_generator):
-        self.model = word2vec.Word2Vec(
+        self.model = Word2Vec(
             sentences=kmer_seq_generator,
             size=self.vec_dim,
             window=self.context_halfsize,
@@ -52,7 +51,7 @@ class Learner:
 
     def write_vec(self):
         out_filename = '{}.w2v'.format(self.out_fileroot)
-        self.model.save_word2vec_format(out_filename, binary=False)
+        self.model.wv.save_word2vec_format(out_filename, binary=False)
 
 def run_main(args, inputs, out_fileroot):
     logbook.info(' '.join(sys.argv))
@@ -104,7 +103,7 @@ def main():
     argp.add_argument('--context', help='half size of context window (the total size is 2*c+1)', type=int, default=4)
     argp.add_argument('--epochs', help='number of epochs', type=int, default=1)
     argp.add_argument('--gensim-iters', help="gensim's internal iterations", type=int, default=1)
-    argp.add_argument('--out-dir', help="output directory", default='../dataset/dna2vec/results')
+    argp.add_argument('--out-dir', help="output directory", default='results')
     argp.add_argument('--debug', help='', action='store_true')
     args = argp.parse_args()
 
