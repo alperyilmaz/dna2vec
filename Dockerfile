@@ -6,4 +6,10 @@ COPY requirements.txt /
 
 RUN pip3 install -r requirements.txt
 
-WORKDIR /app
+
+COPY . /app
+
+ENV PATH="/app/scripts:${PATH}"
+ENV PYTHONPATH="/app:${PYTHONPATH}"
+
+WORKDIR /app/data
