@@ -29,7 +29,7 @@ k-high: 5
 out-dir: results/
 ```
 
-Please refer to `hg38-20161219-0153.yml` for full blown example.
+Please refer to `hg38-20161219-0153.yml` for full blown example. For details about usage, please refer to  [pnpnpn/dna2vec](https://github.com/pnpnpn/dna2vec) repo.
 
 **New**: You can add `nworkers` argument to take full advantage of available CPUs.
 
@@ -42,9 +42,6 @@ This is not systematic testing results, merely my observations at different plat
 |----------|-------------------|---------|
 | i7-4700HQ CPU @ 2.40GHz (Laptop) | 8 | 242,794 |
 | c5.4xlarge| 16 | |
-
-For details about usage, please refer to  [pnpnpn/dna2vec](https://github.com/pnpnpn/dna2vec) repo.
-
 
 License
 ---
